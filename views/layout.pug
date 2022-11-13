@@ -1,0 +1,22 @@
+doctype html
+html(lang="nl")
+  head
+   link(rel="icon" href='images/logo.png')
+   link(rel="stylesheet", type="" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap")
+   link(rel="stylesheet", href="/stylesheets/style.css")
+   title= title
+  body
+    header
+      nav.header-navbar
+        ul
+          li.navbar-item
+            a(href='/' data-home-link) 
+            img(src='images/logo.png' alt='Logo Sporting Lokeren')
+          li.navbar-item
+            a(href='/' data-about-link) Info
+          li.navbar-item
+            a(href='/' data-tickets-link) Tickets
+          li.navbar-item
+            a(href='/' data-bussen-link) Bussen
+    main
+      block content
