@@ -4,11 +4,12 @@ const Schema = mongoose.Schema;
 
 const BusSchema = new Schema({
   busNr: { type: Number, required: true },
-  capacity: { type: Number },
+  capacity: { type: Number, required: true },
   persons: { 
     type: [{ 
       type: Schema.Types.ObjectId,
-      ref: "Person"
+      ref: "Person",
+      required: true
     }],
     validate: [arrayLimit, 'Bus exceeds maximum capacity']
   }

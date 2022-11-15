@@ -6,8 +6,7 @@ const Schema = mongoose.Schema;
 const PersonSchema = new Schema({
   first_name: { type: String, required: true },
   family_name: { type: String, required: true },
-  date_of_birth: { type: Date },
-  is_adult: { type: Boolean },
+  date_of_birth: { type: Date, required: true },
 });
 
 // Format full name

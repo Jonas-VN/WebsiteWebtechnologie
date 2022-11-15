@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 
 const NextGameSchema = new Schema({
     opponent_name: { type: String, required: true },
-    opponent_logo: { data: Buffer, contentType: String },
+    opponent_logo: { data: Buffer, contentType: String, required: true },
     home_game: { type: Boolean, required: true },
-    play_date: { type: Date, default: Date.now },
+    play_date: { type: Date, required: true },
 });
 
 NextGameSchema.virtual('play_date_formatted').get(function () {
