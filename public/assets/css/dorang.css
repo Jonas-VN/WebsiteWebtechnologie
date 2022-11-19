@@ -11781,3 +11781,11 @@ body.light-theme .contact-section .footer .links a {
 body.dark-theme {
   background: #212529;
 }
+
+/*Anchor offset bcs of header*/
+:target::before {
+  content: "";
+  display: block;
+  height: 80px; /* fixed header height*/
+  margin: -60px 0 0; /* negative fixed header height */
+}
