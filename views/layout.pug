@@ -1,23 +1,45 @@
 doctype html
-html(lang="nl")
-  head
-   link(rel="icon" href='images/logo.png')
-   link(rel="stylesheet", type="" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap")
-   link(rel="stylesheet", href="/stylesheets/style.css")
-   title= title
-  body
-    header
-      nav.header-navbar
-        ul
-          li.navbar-item
-            a(href='/')
-              img(src='images/logo.png' alt='Logo Sporting Lokeren')
-          li.navbar-item
-            a(href='/info') Info
-          li.navbar-item
-            a(href='/tickets') Tickets
-          li.navbar-item
-            a(href='/bussen') Bussen
-    main
-      block content
-      
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+  link(rel="icon" href='images/logo.png')
+  title= title
+  // font icons
+  link(rel='stylesheet' href='assets/vendors/themify-icons/css/themify-icons.css')
+  // Bootstrap + Dorang main styles
+  link(rel='stylesheet' href='assets/css/dorang.css')
+
+// page navbar
+nav.page-navbar(data-spy='affix' data-offset-top='10')
+  ul.nav-navbar.container
+    li.nav-item
+      a.nav-link(href='/') Home
+    li.nav-item
+      a.nav-link(href='/info') Info
+    li.nav-item
+      a.nav-link(href='/')
+        img(src='images/logo.png' alt='Logo Sporting Lokeren')
+    li.nav-item
+      a.nav-link(href='/tickets') Tickets
+    li.nav-item
+      a.nav-link(href='/bussen') Bussen
+   
+// end of page navbar
+.theme-selector
+  a.spinner(href='javascript:void(0)')
+    i.ti-paint-bucket
+  .body
+    a.light(href='javascript:void(0)')
+    a.dark(href='javascript:void(0)')
+
+block content
+
+
+// core
+script(src='assets/vendors/bootstrap/bootstrap.bundle.js')
+script(src='assets/vendors/jquery/jquery-3.4.1.js')
+
+// bootstrap affix
+script(src='assets/vendors/bootstrap/bootstrap.affix.js')
+// Dorang js
+script(src='assets/js/dorang.js')
