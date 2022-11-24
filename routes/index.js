@@ -22,4 +22,8 @@ router.get('/bus', function(req, res, next) {
   res.render('bus', { title: 'Bus' });
 });
 
+router.get('/Ticketverkoop',function(req, res, next) {
+  res.render('Ticketverkoop', {title: 'Ticketverkoop'})  
+});
+
 module.exports = router;

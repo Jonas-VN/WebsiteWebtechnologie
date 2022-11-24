@@ -2,7 +2,7 @@ extends layout
 
 block content
   // page header
-  header.header
+  header.overlayHeader
     .overlay
     .header-content
       h1.header-title#countdown
@@ -65,7 +65,7 @@ block content
     
     //Koop tickets
     a(href='/Ticketverkoop')
-        button Koop tickets
+        button.btn.btn-primary Koop tickets
     
         // BUSSEN SECTIE
     .col-md-10.col-lg-8.m-auto
