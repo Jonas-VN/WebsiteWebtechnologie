@@ -2,7 +2,7 @@ extends layout
 
 block content
   // page header
-  header.header
+  header.overlayHeader
     .overlay
     .header-content
       h1.header-title#countdown
@@ -60,9 +60,14 @@ block content
               | Tribune 2
             p
               | Overdekte zitplaatsen achter de goal. 
+              
     // EINDE TICKETS SECTIE
-
-    // BUSSEN SECTIE
+    
+    //Koop tickets
+    a(href='/Ticketverkoop')
+        button.btn.btn-primary Koop tickets
+    
+        // BUSSEN SECTIE
     .col-md-10.col-lg-8.m-auto
       h6.title.mb-4.mt-5.pt-5#vervoer Vervoer
       p.mb-5

@@ -2771,8 +2771,8 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: rgb(217, 212, 0);
+  border-color: rgb(217, 212, 0);
 }
 
 .btn-primary:hover {
@@ -11500,6 +11500,19 @@ a:hover {
   min-height: 600px;
   text-align: center;
   color: #fff;
+  -webkit-transition: .2s;
+  transition: .2s;
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
+}
+
+.overlayHeader {
+  z-index: 990;
+  position: relative;
+  height: 100%;
+  min-height: 600px;
+  text-align: center;
+  color: #fff;
   background-image: url(../imgs/atomium.jpeg);
   background-size: cover;
   background-position: center;
@@ -11509,7 +11522,7 @@ a:hover {
           transition-timing-function: linear;
 }
 
-.header .overlay {
+.overlayHeader .overlay {
   position: absolute;
   left: 0;
   top: 0;
@@ -11519,7 +11532,7 @@ a:hover {
   background-image: radial-gradient(140% 110% at 48% 42%, rgba(33, 37, 41, 0.5), rgba(33, 37, 41, 0.6), rgba(33, 37, 41, 0.7), rgba(33, 37, 41, 0.8), rgba(33, 37, 41, 0.93), #212529 55%, #212529 200%);
 }
 
-.header .header-content {
+.overlayHeader .header-content {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -11528,19 +11541,28 @@ a:hover {
       transform: translate(-50%, -50%);
 }
 
-.header .header-content .header-title {
+.header .header-content {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+}
+
+.overlayHeader .header-content .header-title {
   font-size: calc(25px + (50 - 25) * ((100vw - 300px) / (1300 - 300)));
   margin-top: 15px;
   margin-bottom: 10px;
   font-weight: bold;
 }
 
-.header .header-content .header-subtitle {
+.overlayHeader .header-content .header-subtitle {
   opacity: 1;
   margin-bottom: 30px;
 }
 
-.header .header-content .btn-theme-color {
+.overlayHeader .header-content .btn-theme-color {
   padding: 8px 20px;
   border-radius: 30px;
   border: 2px solid #fff;
@@ -11554,35 +11576,35 @@ a:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .header .header-content .btn-theme-color {
+  .overlayHeader .header-content .btn-theme-color {
     -webkit-transition: none;
     transition: none;
   }
 }
 
-.header .header-content .btn-theme-color i {
+.overlayHeader .header-content .btn-theme-color i {
   position: relative;
   top: 1px;
   font-weight: bold;
 }
 
-.header .header-content .btn-theme-color:hover {
+.overlayHeader .header-content .btn-theme-color:hover {
   background: rgba(255, 255, 255, 0.5);
   border-color: rgba(255, 255, 255, 0.1);
   color: #000;
 }
 
-.header .header-content .btn-theme-color:active {
+.overlayHeader .header-content .btn-theme-color:active {
   background: white;
 }
 
-.header-title {
+.overlayHeader-title {
   font-size: 2.4rem;
   font-weight: bold;
   opacity: .8;
 }
 
-.header-mini {
+.overlayHeader-mini {
   min-height: 24rem;
   height: 24rem;
   display: -webkit-box;
@@ -11690,13 +11712,19 @@ body.light-theme .theme-selector .spinner i {
   color: #343a40;
 }
 
-body.light-theme .header {
+body.light-theme .overlayHeader {
   background-image: url(../imgs/atomium.jpeg);
 }
 
-body.light-theme .header .overlay {
+body.light-theme .overlayHeader .overlay {
   background-image: -webkit-radial-gradient(48% 42%, 140% 110%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.93), #fff 55%, #fff 200%);
   background-image: radial-gradient(140% 110% at 48% 42%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.93), #fff 55%, #fff 200%);
+}
+
+body.light-theme .overlayHeader p,
+body.light-theme .overlayHeader .title,
+body.light-theme .overlayHeader .header-title {
+  color: #212529;
 }
 
 body.light-theme .header p,
@@ -11710,6 +11738,11 @@ body.light-theme .header .btn-theme-color {
   color: #212529;
 }
 
+body.light-theme .overlayHeader .btn-theme-color {
+  border-color: #212529;
+  color: #212529;
+}
+
 body.light-theme .header .btn-theme-color:hover {
   background: rgba(33, 37, 41, 0.5);
   border-color: rgba(33, 37, 41, 0.1);
@@ -11717,6 +11750,16 @@ body.light-theme .header .btn-theme-color:hover {
 }
 
 body.light-theme .header .btn-theme-color:active {
+  background: #212529;
+}
+
+body.light-theme .overlayHeader .btn-theme-color:hover {
+  background: rgba(33, 37, 41, 0.5);
+  border-color: rgba(33, 37, 41, 0.1);
+  color: #fff;
+}
+
+body.light-theme .overlayHeader .btn-theme-color:active {
   background: #212529;
 }
 
