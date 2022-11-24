@@ -2775,6 +2775,11 @@ fieldset:disabled a.btn {
   border-color: rgb(217, 212, 0);
 }
 
+.light-theme .btn-primary {
+  color: #000;
+}
+
+
 .btn-primary:hover {
   color: #fff;
   background-color: #0069d9;
