@@ -1,10 +1,23 @@
 extends layout 
 
 block content 
-  header.header
-      .overlay
-      .header-content
-        h1.title.mb-4 Ticketverkoop
+  .container.page-container
+    .col-md-10.col-lg-8.m-auto
+      h6.title.mb-4.mt-5.pt-5 Ticketverkoop 
 
-        form
-          input.form-control(type='search' name='' placeholder='hit enter to search')
+      form()
+        input(type='radio' name='tribune' required='')
+        label(for='Tribune 1') Tribune 1
+        br
+        input(type='radio' name='tribune' required='')
+        label(for='Tribune 2') Tribune 2
+
+        input.form-control(type='text' size='100%' placeholder='Je voornaam' required='')
+
+        input.form-control(type='text' placeholder='Je familienaam' requried='')
+
+        input.form-control(type='email' placeholder='Je email' requried='')
+
+        input.form-control(type='text' placeholder='Je rekeningnummer' requried='')
+        
+        input.form-control(type='submit' value='Bestel')
