@@ -42,7 +42,7 @@ block content
     // row
     .row.mb-5
       .col-md-6
-        a.card(href='/tribune1')
+        a.card
           img.card-img(src='assets/imgs/stadion_tribune_1.png' alt='Layout van het Koning Boudewijnstadion')
           .card-body
             h6.card-subtitle
@@ -52,7 +52,7 @@ block content
             p
               | Overdekte zitplaatsen met een goed zicht op de spelers en het volledige veld. 
       .col-md-6
-        a.card(href='/tribune2')
+        a.card
           img.card-img(src='assets/imgs/stadion_tribune_2.png' alt='Layout van het Koning Boudewijnstadion')
           .card-body
             h6.card-subtitle Prijs: €35
@@ -63,9 +63,11 @@ block content
               
     // EINDE TICKETS SECTIE
     
-    //Koop tickets
+    // Koop tickets
     a(href='/ticketverkoop')
-        button.btn.btn-primary Koop tickets
+      | Koop tickets
+      i.ti-angle-double-right.angle
+    // Einde koop tickets
     
     // BUSSEN SECTIE
     .col-md-10.col-lg-8.m-auto
@@ -75,7 +77,7 @@ block content
     // row
     .row.mb-5
       .col-md-6
-        a.card(href='/auto')
+        a.card
           img.card-img(src='assets/imgs/parking.jpg' alt='Parking Bruparck in Brussel')
           .card-body
             h6.card-subtitle Prijs: €10
@@ -84,7 +86,7 @@ block content
             p
               | Reserveer hier uw parkeerplaats op wandelafstand van het Koning Boudewijnstadion.
       .col-md-6
-        a.card(href='/bus')
+        a.card
           img.card-img(src='assets/imgs/spelersbus.webp' alt='Spelersbus van Sporting Lokeren')
           .card-body
             h6.card-subtitle Prijs: €15 (heen + terug)
