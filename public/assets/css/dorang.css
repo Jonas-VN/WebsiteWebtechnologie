@@ -11163,20 +11163,27 @@ a:hover {
   color: #fff;
 }
 
-.form-control[type="submit"] {
+.form-control[type="submit"],
+.form-control[type="reset"] {
   padding-bottom: 27px;
   line-height: 20px;
 }
 
-.form-control[type="submit"]:focus, .form-control[type="submit"]:hover {
-  background-color: rgba(102, 176, 255, 0.5);
+.form-control[type="submit"]:focus, .form-control[type="submit"]:hover,
+.form-control[type="reset"]:focus, .form-control[type="reset"]:hover  {
+  background-color: #fff;
+  border-color: #fff;
+  color: #000;
+}
+
+.form-control[type="submit"]:active,
+.form-control[type="reset"]:active {
+  background: rgba(33, 37, 41, 0.2);
   border-color: rgba(102, 176, 255, 0.8);
+  box-shadow: 0 0 5px rgba(102, 176, 255, 0.2);
   color: #fff;
 }
 
-.form-control[type="submit"]:active {
-  background-color: rgba(102, 176, 255, 0.7);
-}
 
 /* modal box */
 .modalBox {
@@ -11818,10 +11825,23 @@ body.light-theme .form-control:focus {
   border-color: rgba(33, 37, 41, 0.6);
 }
 
-body.light-theme .form-control[type="submit"]:focus, body.light-theme .form-control[type="submit"]:hover {
-  background-color: rgba(52, 58, 64, 0.6);
-  border-color: rgba(52, 58, 64, 0.6);
+body.light-theme .form-control[type="submit"]:focus, body.light-theme .form-control[type="submit"]:hover,
+body.light-theme .form-control[type="reset"]:focus, body.light-theme .form-control[type="reset"]:hover {
+  background-color: #212529;
+  border-color:#212529;
   color: #fff;
+}
+
+body.light-theme .form-control[type="submit"]:active,
+body.light-theme .form-control[type="reset"]:active {
+  background: #fff;
+  border-color: rgba(102, 176, 255, 0.8);
+  box-shadow: 0 0 5px rgba(102, 176, 255, 0.2);
+  color: #000;
+}
+
+body.dark-theme .form-control::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }
 
 body.light-theme .contact-section .overlay {
