@@ -6,11 +6,9 @@ block content
       h6.title.mb-4.mt-5.pt-5 Ticketverkoop 
 
       form()
-        input(type='radio' name='tribune' required='')
-        label(for='Tribune 1') Tribune 1
-        br
-        input(type='radio' name='tribune' required='')
-        label(for='Tribune 2') Tribune 2
+        select(name='tribune')
+          option(value='Tribune 1') Tribune 1
+          option(value='Tribune 2') Tribune 2
 
         input.form-control(type='text' size='100%' placeholder='Je voornaam' required='')
 

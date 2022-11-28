@@ -53,7 +53,7 @@ $(document).ready(function(){
         setCookie("theme", "light");
     });
     $('.dark').click(function(){
-        $('body').toggleClass('dark-theme');
+        $('body').addClass('dark-theme');
         $('body').removeClass('light-theme');
         setCookie("theme", "dark");
     });
