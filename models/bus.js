@@ -4,21 +4,20 @@ const Schema = mongoose.Schema;
 
 const BusSchema = new Schema({
   busNr: { type: Number, required: true },
-  capacity: { type: Number, required: true },
-  current_amount_of_persons: { type: Number, default: 0},
+  departure: { type: Date, required: true },
   persons: { 
     type: [{ 
       type: Schema.Types.ObjectId,
       ref: "Person",
       required: true
     }],
-    // niet zeker ofdat dit werkt, daarom current_amount_of_persons toegevoegd zodat we ook makkelijk in de controller zouden kunnen
-    validate: [arrayLimit, 'Bus exceeds maximum capacity'] 
   }
 })
 
-function arrayLimit(val) {
-  return val.length <= this.capacity;
-}
+// Format date of birth
+BusSchema.virtual("departure_formatted").get(function () {
+  return this.departure ? DateTime.fromJSDate(this.departure).toLocaleString(DateTime.DATE_MED) : '';
+});
+
 
 module.exports = mongoose.model('Bus', BusSchema);
