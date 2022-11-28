@@ -3,15 +3,14 @@ extends layout
 block content 
   .container.page-container
     .col-md-10.col-lg-8.m-auto
-      h6.title.mb-4.mt-5.pt-5 Ticketverkoop 
+      h6.title.mb-4.mt-5.pt-5 Bestel bustickets   
 
       form()
-        input(type='radio' name='tribune' required='')
-        label(for='Tribune 1') Tribune 1
-        br
-        input(type='radio' name='tribune' required='')
-        label(for='Tribune 2') Tribune 2
-
+        label(for='yes_no_radio')  
+        p
+         input(type='checkbox' name='yes_no' checked='')
+         | Drank + snack bij bestellen (5 euro extra)
+        
         input.form-control(type='text' size='100%' placeholder='Je voornaam' required='')
 
         input.form-control(type='text' placeholder='Je familienaam' requried='')
