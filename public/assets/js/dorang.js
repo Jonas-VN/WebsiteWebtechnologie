@@ -21,7 +21,7 @@ $(document).ready(function(){
         $('body').removeClass('dark-theme');
     }
     else if (cookie == "dark") {
-        $('body').toggleClass('dark-theme');
+        $('body').addClass('dark-theme');
         $('body').removeClass('light-theme');
     }
     else {
@@ -76,7 +76,7 @@ function getCookie(cname) {
   }
 
   function setCookie(cname, cvalue) {
-    document.cookie = cname + "=" + cvalue + ";";
+    return document.cookie = cname + "=" + cvalue + ";";
   }
 
 
