@@ -3,15 +3,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const BusSchema = new Schema({
-  busNr: { type: Number, required: true },
+  number: { type: Number, required: true },
   departure: { type: Date, required: true },
-  persons: { 
-    type: [{ 
-      type: Schema.Types.ObjectId,
-      ref: "Person",
-      required: true
-    }],
-  }
 })
 
 // Format date of birth

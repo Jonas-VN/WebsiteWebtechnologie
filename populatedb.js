@@ -13,6 +13,7 @@ if (!userArgs[0].startsWith('mongodb')) {
 var async = require('async')
 var Person = require('./models/person')
 var Tribune = require('./models/tribune')
+var Bus = require('./models/bus')
 
 
 var mongoose = require('mongoose');
@@ -24,6 +25,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 var persons = [];
 var tribunes = [];
+var busses = [];
 
 function personCreate(first_name, family_name, d_birth, mail, cb) {
   persondetail = {first_name:first_name , family_name: family_name, date_of_birth: d_birth, email: mail}
@@ -52,11 +54,26 @@ function tribuneCreate(nr, desc, pr, im, cb) {
       return
     }
     console.log('New Tribune: ' + tribune);
-    persons.push(tribune)
+    tribunes.push(tribune)
     cb(null, tribune)
   }  );
 } 
 
+function busCreate(nr, dep, cb) {
+  busdetail = {number: nr, departure: dep};
+
+  var bus = new Bus(busdetail);
+
+  bus.save(function (err) {
+    if (err) {
+      cb(err, null)
+      return
+    }
+    console.log('New Bus: ' + bus);
+    busses.push(bus)
+    cb(null, bus)
+  }  );
+}
 
 function createPersons(cb) {
     async.series([
@@ -84,10 +101,32 @@ function createTribunes(cb) {
       cb);
 }
 
+function createBus(cb) {
+  async.series([
+    function(callback) {
+      busCreate(1, '2023-03-22T12:00:00', callback)
+    },
+    function(callback) {
+      busCreate(2, '2023-03-22T13:00:00', callback)
+    },
+    function(callback) {
+      busCreate(3, '2023-03-22T14:00:00', callback)
+    },
+    function(callback) {
+      busCreate(4, '2023-03-22T15:00:00', callback)
+    },
+    function(callback) {
+      busCreate(5, '2023-03-22T16:00:00', callback)
+    },
+  ],
+  cb);
+
+}
+
 
 
 async.series([
-  createTribunes,
+  createBus,
 ],
 // Optional callback
 function(err, results) {
