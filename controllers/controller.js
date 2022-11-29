@@ -1,6 +1,8 @@
 const Tribune = require('../models/tribune');
 const Person = require('../models/person');
 const Ticket = require('../models/ticket');
+const Bus = require('../models/bus');
+const BusTicket = require('../models/busTicket');
 const { body, validationResult } = require('express-validator');
 
 exports.index = function(req, res, next) {
@@ -99,6 +101,98 @@ exports.ticket_verkoop_post = [
       })
   
       ticket.save((err) => {
+        if (err) {
+          return next(err);
+        }
+        res.redirect('/');
+    });
+  })}
+]
+
+exports.bus_verkoop_get = function(req, res, next) {
+  Bus.find()
+    .exec(function (err, list_busses) {
+      if (err) {
+        return next(err);
+    }
+    console.log(list_busses)
+    // Successful, so render
+    res.render('busverkoop', {
+      title: 'Busverkoop',
+      busses: list_busses,
+      });
+    });
+};
+
+exports.bus_verkoop_post = [
+  // Validate and sanitize fields
+  body('yes_no', 'Drank + snack mag niet leeg zijn')
+    .escape(),
+  body('bus', 'Bus mag niet leeg zijn.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('first_name', 'Voornaam mag niet leeg zijn.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('last_name', 'Familienaam mag niet leeg zijn.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('email', 'Email mag niet leeg zijn.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('birth_date', 'Geboortedatum mag niet leeg zijn.')
+    .optional({ checkFalsy: true })
+    .isISO8601()
+    .toDate(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+    
+    if (!errors.isEmpty()) {
+      res.render('busverkoop', {
+        title: 'Busverkoop',
+        tribunes: req.body.busses,
+        errors: errors.array(),
+      });
+      return;
+    }
+
+    // From is valid.
+    Person.findOne({
+      first_name: req.body.first_name,
+      family_name: req.body.last_name,
+      email: req.body.email,
+      date_of_birth: req.body.birth_date,
+    })
+    .exec(function (err, person) {
+      if (err) {
+        return next(err);
+      }
+      // Persoon zit nog niet in DB -> toevoegen
+      if (person == null) {
+        person = new Person({
+          first_name: req.body.first_name,
+          family_name: req.body.last_name,
+          email: req.body.email,
+          date_of_birth: req.body.birth_date,
+        });
+  
+        person.save((err) => {
+          if (err) {
+            return next(err);
+          }
+        })
+      }
+      const busticket = new BusTicket({
+        person: person,
+        bus: req.body.bus,
+      })
+  
+      busticket.save((err) => {
         if (err) {
           return next(err);
         }
