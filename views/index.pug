@@ -39,26 +39,17 @@ block content
         | Koop hier uw tickets voor het Koning Boudewijnstadion.
     // row
     .row.mb-5
-      .col-md-6
-        a.card
-          img.card-img(src='assets/imgs/stadion_tribune_1.png' alt='Layout van het Koning Boudewijnstadion')
-          .card-body
-            h6.card-subtitle
-              | Prijs: €50
-            h3.card-title
-              | Tribune 1
-            p
-              | Overdekte zitplaatsen met een goed zicht op de spelers en het volledige veld. 
-      .col-md-6
-        a.card
-          img.card-img(src='assets/imgs/stadion_tribune_2.png' alt='Layout van het Koning Boudewijnstadion')
-          .card-body
-            h6.card-subtitle Prijs: €35
-            h3.card-title
-              | Tribune 2
-            p
-              | Overdekte zitplaatsen achter de goal. 
-              
+      each tribune in tribunes
+        .col-md-6
+          a.card
+            img.card-img(src=tribune.image alt='Layout van het Koning Boudewijnstadion')
+            .card-body
+              h6.card-subtitle
+                | Prijs: €#{tribune.price}
+              h3.card-title
+                | Tribune #{tribune.number}
+              p 
+                | #{tribune.description}              
     // EINDE TICKETS SECTIE
     
     // Koop tickets

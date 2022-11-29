@@ -12,6 +12,7 @@ if (!userArgs[0].startsWith('mongodb')) {
 */
 var async = require('async')
 var Person = require('./models/person')
+var Tribune = require('./models/tribune')
 
 
 var mongoose = require('mongoose');
@@ -21,7 +22,8 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-var persons = []
+var persons = [];
+var tribunes = [];
 
 function personCreate(first_name, family_name, d_birth, mail, cb) {
   persondetail = {first_name:first_name , family_name: family_name, date_of_birth: d_birth, email: mail}
@@ -39,6 +41,21 @@ function personCreate(first_name, family_name, d_birth, mail, cb) {
   }  );
 }
 
+function tribuneCreate(nr, desc, pr, im, cb) {
+  tribunedetail = {number: nr, description: desc, price: pr, image: im}
+
+  var tribune = new Tribune(tribunedetail);
+       
+  tribune.save(function (err) {
+    if (err) {
+      cb(err, null)
+      return
+    }
+    console.log('New Tribune: ' + tribune);
+    persons.push(tribune)
+    cb(null, tribune)
+  }  );
+} 
 
 
 function createPersons(cb) {
@@ -54,10 +71,23 @@ function createPersons(cb) {
         cb);
 }
 
+function createTribunes(cb) {
+  async.series([
+      function(callback) {
+        tribuneCreate(1, 'Overdekte zitplaatsen met een goed zicht op de spelers en het volledige veld.', 50, 'assets/imgs/stadion_tribune_1.png', callback);
+      },
+      function(callback) {
+        tribuneCreate(2, 'Overdekte zitplaatsen achter de goal.', 35, 'assets/imgs/stadion_tribune_2.png', callback);
+      },
+      ],
+      // optional callback
+      cb);
+}
+
 
 
 async.series([
-    createPersons,
+  createTribunes,
 ],
 // Optional callback
 function(err, results) {
