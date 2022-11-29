@@ -7,7 +7,9 @@ const controller = require('../controllers/controller');
 router.get('/', controller.index);
 
 
-router.get('/ticketverkoop', controller.ticket_verkoop);
+router.get('/ticketverkoop', controller.ticket_verkoop_get);
+
+router.post('/ticketverkoop', controller.ticket_verkoop_post);
 
 
 router.get('/busverkoop', function(req, res, next) {

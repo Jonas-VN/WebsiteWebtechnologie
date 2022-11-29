@@ -5,20 +5,20 @@ block content
     .col-md-10.col-lg-8.m-auto
       h6.title.mb-4.mt-5.pt-5 Ticketverkoop 
 
-      form()
+      form(method='POST' action='')
         select(name='tribune')
           each tribune in tribunes
             option(value=tribune._id) Tribune #{tribune.number} (€#{tribune.price})
 
-        input.form-control(type='text' size='100%' placeholder='Je voornaam' required='')
+        input.form-control(type='text' name='first_name' size='100%' placeholder='Je voornaam' required='true')
 
-        input.form-control(type='text' placeholder='Je familienaam' requried='')
+        input.form-control(type='text' name='last_name' placeholder='Je familienaam' requried='true')
 
-        input.form-control(type='email' placeholder='Je email' requried='')
+        input.form-control(type='email' name='email' placeholder='Je email' requried='true')
 
-        input.form-control(type='text' placeholder='Je geboortedatum' required='' onfocus="this.type='date'")
+        input.form-control(type='text' name='birth_date' placeholder='Je geboortedatum' required='true' onfocus="this.type='date'")
 
-        input.form-control(type='hidden' required='' value='1')
+        input.form-control(type='hidden' required='true' value='1')
 
         input.form-control(type='reset')
         
