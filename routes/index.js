@@ -7,9 +7,7 @@ const controller = require('../controllers/controller');
 router.get('/', controller.index);
 
 
-router.get('/ticketverkoop', function(req, res, next) {
-  res.render('ticketverkoop', {title: 'Ticketverkoop'})  
-});
+router.get('/ticketverkoop', controller.ticket_verkoop);
 
 
 router.get('/busverkoop', function(req, res, next) {

@@ -7,8 +7,8 @@ block content
 
       form()
         select(name='tribune')
-          option(value='Tribune 1') Tribune 1
-          option(value='Tribune 2') Tribune 2
+          each tribune in tribunes
+            option(value=tribune._id) Tribune #{tribune.number} (€#{tribune.price})
 
         input.form-control(type='text' size='100%' placeholder='Je voornaam' required='')
 
