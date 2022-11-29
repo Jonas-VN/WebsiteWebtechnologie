@@ -187,7 +187,14 @@ exports.bus_verkoop_post = [
           }
         })
       }
+      console.log(req.body.yes_no)
+      var checked = false;
+      if (req.body.yes_no == 'on') {
+        checked = true;
+      }
+
       const busticket = new BusTicket({
+        snacksIncluded: checked,
         person: person,
         bus: req.body.bus,
       })
