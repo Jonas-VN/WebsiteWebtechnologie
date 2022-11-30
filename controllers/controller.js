@@ -11,7 +11,7 @@ exports.index = function(req, res, next) {
       if (err) {
         return next(err);
     }
-    console.log(list_tribunes)
+
     // Successful, so render
     res.render('index', {
       title: 'Home',
@@ -116,7 +116,7 @@ exports.bus_verkoop_get = function(req, res, next) {
       if (err) {
         return next(err);
     }
-    console.log(list_busses)
+
     // Successful, so render
     res.render('busverkoop', {
       title: 'Busverkoop',
@@ -189,7 +189,7 @@ exports.bus_verkoop_post = [
           }
         })
       }
-      console.log(req.body.yes_no)
+
       var checked = false;
       if (req.body.yes_no == 'on') {
         checked = true;

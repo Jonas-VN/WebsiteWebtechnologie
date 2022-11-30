@@ -8,7 +8,7 @@ const BusSchema = new Schema({
   departure: { type: Date, required: true },
 })
 
-// Format date of birth
+// Format departure to HH:MM
 BusSchema.virtual("departure_time").get(function () {
   return this.departure ? DateTime.fromJSDate(this.departure).setLocale('nl').toLocaleString(DateTime.TIME_24_SIMPLE) : '';
 });
