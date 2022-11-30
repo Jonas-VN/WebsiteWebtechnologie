@@ -18,8 +18,8 @@ router.get('/ticketverkoop', csrfProtect, controller.ticket_verkoop_get);
 router.post('/ticketverkoop', parseForm, csrfProtect, controller.ticket_verkoop_post);
 
 
-router.get('/busverkoop', controller.bus_verkoop_get);
+router.get('/busverkoop', csrfProtect, controller.bus_verkoop_get);
 
-router.post('/busverkoop', controller.bus_verkoop_post);
+router.post('/busverkoop', parseForm, csrfProtect, controller.bus_verkoop_post);
 
 module.exports = router;

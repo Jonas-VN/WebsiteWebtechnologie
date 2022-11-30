@@ -121,6 +121,7 @@ exports.bus_verkoop_get = function(req, res, next) {
     res.render('busverkoop', {
       title: 'Busverkoop',
       busses: list_busses,
+      csrfToken: req.csrfToken(),
       });
     });
 };
