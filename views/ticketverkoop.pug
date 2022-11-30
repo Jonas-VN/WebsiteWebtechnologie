@@ -18,7 +18,7 @@ block content
 
         input.form-control(type='text' name='birth_date' placeholder='Je geboortedatum' required='true' onfocus="this.type='date'")
 
-        input.form-control(type='hidden' required='true' value='1')
+        input.form-control(type='hidden' name='_csrf' required='true' value=csrfToken)
 
         input.form-control(type='reset')
         

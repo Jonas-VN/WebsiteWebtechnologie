@@ -76,7 +76,7 @@ function getCookie(cname) {
   }
 
   function setCookie(cname, cvalue) {
-    return document.cookie = cname + "=" + cvalue + ";";
+    document.cookie = cname + "=" + cvalue + ";";
   }
 
 

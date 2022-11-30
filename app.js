@@ -2,6 +2,8 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var csrf = require('csurf');
 var logger = require('morgan');
 const mongoose = require("mongoose");
 
@@ -9,6 +11,10 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+var csrfProtect = csrf({ cookie: true })
+var parseForm = bodyParser.urlencoded({ extended: false })
+
 
 // Set up mongoose connection
 const mongoDB = "mongodb+srv://ginijo:azerty123%40@testwebsitelokeren.ky1irsu.mongodb.net/website_lokeren?retryWrites=true&w=majority";

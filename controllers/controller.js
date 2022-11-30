@@ -30,6 +30,7 @@ exports.ticket_verkoop_get = function(req, res, next) {
     res.render('ticketverkoop', {
       title: 'Ticketverkoop',
       tribunes: list_tribunes,
+      csrfToken: req.csrfToken(),
       });
     });
 };
