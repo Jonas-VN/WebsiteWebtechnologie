@@ -3,21 +3,26 @@ const Person = require('../models/person');
 const Ticket = require('../models/ticket');
 const Bus = require('../models/bus');
 const BusTicket = require('../models/busTicket');
+const async = require("async");
 const { body, validationResult } = require('express-validator');
 
 exports.index = function(req, res, next) {
-  Tribune.find()
-    .exec(function (err, list_tribunes) {
+  async.parallel(
+    {
+      list_tribunes(callback) {
+        Tribune.find({}, callback)
+      }
+    },
+    (err, results) => {
       if (err) {
         return next(err);
+      }
+      res.render('index', {
+        title: 'Home',
+        tribunes: results.list_tribunes,
+        });
     }
-
-    // Successful, so render
-    res.render('index', {
-      title: 'Home',
-      tribunes: list_tribunes,
-      });
-    });
+  );
 };
 
 exports.ticket_verkoop_get = function(req, res, next) {
