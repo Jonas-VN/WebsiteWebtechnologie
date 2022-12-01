@@ -15,16 +15,27 @@ block content
           each bus in busses
             option(value=bus._id) Bus #{bus.number} (Vertrekt om #{bus.departure_time})
         
-        input.form-control(type='text' name='first_name' size='100%' placeholder='Je voornaam' required='')
+        input.form-control(type='text' name='first_name' size='100%' placeholder='Je voornaam' required='true')
 
-        input.form-control(type='text' name='last_name' placeholder='Je familienaam' requried='')
+        input.form-control(type='text' name='last_name' placeholder='Je familienaam' required='true')
 
-        input.form-control(type='email' name='email' placeholder='Je email' requried='')
+        input.form-control(type='email' name='email' placeholder='Je email' required='true')
 
-        input.form-control(type='text' name='birth_date' placeholder='Je geboortedatum' required='' onfocus="this.type='date'")
+        input.form-control(type='text' name='birth_date' placeholder='Je geboortedatum' required='true' onfocus="this.type='date'")
 
-        input.form-control(type='hidden' name='_csrf' required='' value=csrfToken)
+        label(for='policy')  
+        p
+         input(type='checkbox' name='policy' required='true')
+         | Ga je akkoord met onze voorwaarden?
+        
+        input.form-control(type='hidden' name='_csrf' required='true' value=csrfToken)
 
         input.form-control(type='reset')
         
         input.form-control(type='submit' value='Bestel')
+
+      // Eigenlijk niet nodig, maar voor de zekerheid
+      if errors 
+        ul 
+          each error in errors
+            li!= error.msg

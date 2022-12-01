@@ -57,16 +57,29 @@ exports.ticket_verkoop_post = [
     .optional({ checkFalsy: true })
     .isISO8601()
     .toDate(),
+  body('policy', 'Je moet akkoord gaan met onze voorwaarden')  // checked = 'on', niet checked = ''
+    .isLength({ min: 2 })
+    .escape(),
 
   (req, res, next) => {
     const errors = validationResult(req);
-    
+
     if (!errors.isEmpty()) {
-      res.render('ticketverkoop', {
-        title: 'Ticketverkoop',
-        tribunes: req.body.tribunes,
-        errors: errors.array(),
-      });
+      Tribune.find()
+        .exec(function (err, list_tribunes) {
+          if (err) {
+            return next(err);
+          }
+
+        // Successful, so render
+        res.render('ticketverkoop', {
+          title: 'Ticketverkoop',
+          tribunes: list_tribunes,
+          csrfToken: req.csrfToken(),
+          errors: errors.array(),
+          });
+        }
+      );
       return;
     }
 
@@ -150,16 +163,29 @@ exports.bus_verkoop_post = [
     .optional({ checkFalsy: true })
     .isISO8601()
     .toDate(),
+  body('policy', 'Je moet akkoord gaan met onze voorwaarden')  // checked = 'on', niet checked = ''
+    .isLength({ min: 2 })
+    .escape(),
 
   (req, res, next) => {
     const errors = validationResult(req);
     
     if (!errors.isEmpty()) {
-      res.render('busverkoop', {
-        title: 'Busverkoop',
-        tribunes: req.body.busses,
-        errors: errors.array(),
-      });
+      Bus.find()
+        .exec(function (err, list_busses) {
+          if (err) {
+            return next(err);
+        }
+      
+        // Successful, so render
+        res.render('busverkoop', {
+          title: 'Busverkoop',
+          busses: list_busses,
+          csrfToken: req.csrfToken(),
+          errors: errors.array(),
+          });
+        }
+      );
       return;
     }
 
