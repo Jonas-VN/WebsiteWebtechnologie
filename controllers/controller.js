@@ -20,24 +20,29 @@ exports.index = function(req, res, next) {
       res.render('index', {
         title: 'Home',
         tribunes: results.list_tribunes,
-        });
+      });
     }
   );
 };
 
 exports.ticket_verkoop_get = function(req, res, next) {
-  Tribune.find()
-    .exec(function (err, list_tribunes) {
+  async.parallel(
+    {
+      list_tribunes(callback) {
+        Tribune.find({}, callback)
+      }
+    },
+    (err, results) => {
       if (err) {
         return next(err);
-    }
-    // Successful, so render
-    res.render('ticketverkoop', {
-      title: 'Ticketverkoop',
-      tribunes: list_tribunes,
-      csrfToken: req.csrfToken(),
+      }
+      res.render('ticketverkoop', {
+        title: 'Ticketverkoop',
+        tribunes: results.list_tribunes,
+        csrfToken: req.csrfToken(),
       });
-    });
+    }
+  );
 };
 
 exports.ticket_verkoop_post = [
@@ -70,18 +75,21 @@ exports.ticket_verkoop_post = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      Tribune.find()
-        .exec(function (err, list_tribunes) {
+      async.parallel(
+        {
+          list_tribunes(callback) {
+            Tribune.find({}, callback)
+          }
+        },
+        (err, results) => {
           if (err) {
             return next(err);
           }
-
-        // Successful, so render
-        res.render('ticketverkoop', {
-          title: 'Ticketverkoop',
-          tribunes: list_tribunes,
-          csrfToken: req.csrfToken(),
-          errors: errors.array(),
+          res.render('ticketverkoop', {
+            title: 'Ticketverkoop',
+            tribunes: results.list_tribunes,
+            csrfToken: req.csrfToken(),
+            errors: errors.array(),
           });
         }
       );
@@ -129,19 +137,23 @@ exports.ticket_verkoop_post = [
 ]
 
 exports.bus_verkoop_get = function(req, res, next) {
-  Bus.find()
-    .exec(function (err, list_busses) {
+  async.parallel(
+    {
+      list_busses(callback) {
+        Bus.find({}, callback)
+      }
+    },
+    (err, results) => {
       if (err) {
         return next(err);
-    }
-
-    // Successful, so render
-    res.render('busverkoop', {
-      title: 'Busverkoop',
-      busses: list_busses,
-      csrfToken: req.csrfToken(),
+      }
+      res.render('busverkoop', {
+        title: 'Busverkoop',
+        busses: results.list_busses,
+        csrfToken: req.csrfToken(),
       });
-    });
+    }
+  );
 };
 
 exports.bus_verkoop_post = [
@@ -176,18 +188,21 @@ exports.bus_verkoop_post = [
     const errors = validationResult(req);
     
     if (!errors.isEmpty()) {
-      Bus.find()
-        .exec(function (err, list_busses) {
+      async.parallel(
+        {
+          list_busses(callback) {
+            Bus.find({}, callback)
+          }
+        },
+        (err, results) => {
           if (err) {
             return next(err);
-        }
-      
-        // Successful, so render
-        res.render('busverkoop', {
-          title: 'Busverkoop',
-          busses: list_busses,
-          csrfToken: req.csrfToken(),
-          errors: errors.array(),
+          }
+          res.render('busverkoop', {
+            title: 'Busverkoop',
+            busses: results.list_busses,
+            csrfToken: req.csrfToken(),
+            errors: errors.array(),
           });
         }
       );
