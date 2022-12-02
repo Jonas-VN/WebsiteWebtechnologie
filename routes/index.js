@@ -21,4 +21,13 @@ router.get('/busverkoop', csrfProtect, controller.bus_verkoop_get);
 
 router.post('/busverkoop', parseForm, csrfProtect, controller.bus_verkoop_post);
 
+
+router.get('/cookiepolicy', function(req, res, next) {
+	res.render('cookiepolicy', { title: 'Cookie Policy' });
+  });
+
+router.get('/privacypolicy', function(req, res, next) {
+	res.render('privacypolicy', { title: 'Privacy Policy' });
+  });
+
 module.exports = router;
