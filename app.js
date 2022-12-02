@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require("mongoose");
+var cookieSession = require('cookie-session');
+var { randomBytes } = require('crypto');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -25,6 +27,18 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// set up the cookie for the session
+app.use(cookieSession({
+	name: 'session',                              // name of the cookie
+	secret: randomBytes(100).toString('base64'),  // key to encode session
+	maxAge: 24 * 60 * 60 * 1000,                  // cookie's lifespan
+	sameSite: 'strict',                              // controls when cookies are sent
+	path: 'localhost',                                    // explicitly set this for security purposes
+	secure: process.env.NODE_ENV === 'production',// cookie only sent on HTTPS
+	httpOnly: true                                // cookie is not available to JavaScript (client)
+  }));
+  
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

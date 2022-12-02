@@ -13,7 +13,7 @@ block content
     .col-md-10.col-lg-8.m-auto
       h6.title.mb-4.mt-5.pt-5 Bestel bustickets   
 
-      form#demo-form(method='POST' action='')
+      form(method='POST' action='')
         label(for='yes_no_radio')  
         p
          input(type='checkbox' name='yes_no' checked='')
@@ -36,7 +36,7 @@ block content
          input(type='checkbox' name='policy' required='true')
          | Ga je akkoord met onze #[a(href='/privacypolicy') voorwaarden]?
         
-        input.form-control(type='hidden' name='_csrf' required='true' value=csrfToken)
+        input.form-control(type='hidden' name='csrf' required='true' value=csrfToken)
 
         #recaptcha(style= "display: flex; justify-content: center;" )
 

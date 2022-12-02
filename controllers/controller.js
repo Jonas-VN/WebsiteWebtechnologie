@@ -5,8 +5,15 @@ const Bus = require('../models/bus');
 const BusTicket = require('../models/busTicket');
 const async = require("async");
 const { body, validationResult } = require('express-validator');
+var { randomBytes } = require('crypto');
+
 
 exports.index = function(req, res, next) {
+  // Set session token on first visit
+  if (req.session.csrf === undefined) {
+    req.session.csrf = randomBytes(100).toString('base64'); // convert random data to a string
+  }
+
   async.parallel(
     {
       list_tribunes(callback) {
@@ -39,7 +46,7 @@ exports.ticket_verkoop_get = function(req, res, next) {
       res.render('ticketverkoop', {
         title: 'Ticketverkoop',
         tribunes: results.list_tribunes,
-        csrfToken: req.csrfToken(),
+        csrfToken: req.session.csrf,
       });
     }
   );
@@ -76,7 +83,7 @@ exports.ticket_verkoop_post = [
   (req, res, next) => {
     const errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
+    if (!errors.isEmpty() || !req.body.csrf || req.body.csrf !== req.session.csrf) {
       async.parallel(
         {
           list_tribunes(callback) {
@@ -90,7 +97,7 @@ exports.ticket_verkoop_post = [
           res.render('ticketverkoop', {
             title: 'Ticketverkoop',
             tribunes: results.list_tribunes,
-            csrfToken: req.csrfToken(),
+            csrfToken: req.session.csrf,
             errors: errors.array(),
           });
         }
@@ -152,7 +159,7 @@ exports.bus_verkoop_get = function(req, res, next) {
       res.render('busverkoop', {
         title: 'Busverkoop',
         busses: results.list_busses,
-        csrfToken: req.csrfToken(),
+        csrfToken: req.session.csrf,
       });
     }
   );
@@ -190,8 +197,9 @@ exports.bus_verkoop_post = [
 
   (req, res, next) => {
     const errors = validationResult(req);
-    
-    if (!errors.isEmpty()) {
+
+    // Als er errors zijn, als de form geen csrf token bevat of als de tokens niet overeen komen -> opnieuw
+    if (!errors.isEmpty() || !req.body.csrf || req.body.csrf !== req.session.csrf) {
       async.parallel(
         {
           list_busses(callback) {
@@ -205,7 +213,7 @@ exports.bus_verkoop_post = [
           res.render('busverkoop', {
             title: 'Busverkoop',
             busses: results.list_busses,
-            csrfToken: req.csrfToken(),
+            csrfToken: req.session.csrf,
             errors: errors.array(),
           });
         }
