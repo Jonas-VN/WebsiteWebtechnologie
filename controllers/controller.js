@@ -64,11 +64,13 @@ exports.ticket_verkoop_post = [
     .isLength({ min: 1 })
     .escape(),
   body('birth_date', 'Geboortedatum mag niet leeg zijn.')
-    .optional({ checkFalsy: true })
     .isISO8601()
     .toDate(),
   body('policy', 'Je moet akkoord gaan met onze voorwaarden')  // checked = 'on', niet checked = ''
     .isLength({ min: 2 })
+    .escape(),
+	body('g-recaptcha-response', 'ReCaptcha mag niet leeg zijn.') // '' als niet gedaan, anders lange string
+    .isLength({ min: 1 })
     .escape(),
 
   (req, res, next) => {
@@ -177,11 +179,13 @@ exports.bus_verkoop_post = [
     .isLength({ min: 1 })
     .escape(),
   body('birth_date', 'Geboortedatum mag niet leeg zijn.')
-    .optional({ checkFalsy: true })
     .isISO8601()
     .toDate(),
   body('policy', 'Je moet akkoord gaan met onze voorwaarden')  // checked = 'on', niet checked = ''
     .isLength({ min: 2 })
+    .escape(),
+  body('g-recaptcha-response', 'ReCaptcha mag niet leeg zijn.') // '' als niet gedaan, anders lange string
+    .isLength({ min: 1 })
     .escape(),
 
   (req, res, next) => {

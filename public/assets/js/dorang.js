@@ -12,6 +12,14 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+
+window.addEventListener('load', () => {
+	const $recaptcha = document.querySelector('#g-recaptcha-response');
+	if ($recaptcha) {
+	  $recaptcha.setAttribute('required', 'required');
+	}
+  })
+
 // toggle 
 $(document).ready(function(){
     // cookie policy

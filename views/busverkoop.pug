@@ -1,11 +1,19 @@
 extends layout 
 
+block head 
+  script(type='text/javascript').
+    var onloadCallback = function() {
+    grecaptcha.render('recaptcha', {
+    'sitekey' : '6LfPNk4jAAAAAOstsVl-cvM7tkmGbFmO_zK4ZH3N'
+    });
+    };
+
 block content 
   .container.page-container
     .col-md-10.col-lg-8.m-auto
       h6.title.mb-4.mt-5.pt-5 Bestel bustickets   
 
-      form(method='POST' action='')
+      form#demo-form(method='POST' action='')
         label(for='yes_no_radio')  
         p
          input(type='checkbox' name='yes_no' checked='')
@@ -30,12 +38,16 @@ block content
         
         input.form-control(type='hidden' name='_csrf' required='true' value=csrfToken)
 
+        #recaptcha(style= "display: flex; justify-content: center;" )
+
         input.form-control(type='reset')
         
         input.form-control(type='submit' value='Bestel')
 
+      script(src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit' async='' defer='')
+      
+
       // Eigenlijk niet nodig, maar voor de zekerheid
       if errors 
-        ul 
-          each error in errors
-            li!= error.msg
+        each error in errors
+          p!= error.msg

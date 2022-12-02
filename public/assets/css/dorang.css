@@ -3377,6 +3377,7 @@ fieldset:disabled a.btn {
   margin-top: 0.5rem;
 }
 
+.g-recaptcha,
 input[type="submit"].btn-block,
 input[type="reset"].btn-block,
 input[type="button"].btn-block {
@@ -11186,12 +11187,14 @@ a:hover {
   color: #fff;
 }
 
+.g-recaptcha,
 .form-control[type="submit"],
 .form-control[type="reset"] {
   padding-bottom: 27px;
   line-height: 20px;
 }
 
+.g-recaptcha:hover,
 .form-control[type="submit"]:focus, .form-control[type="submit"]:hover,
 .form-control[type="reset"]:focus, .form-control[type="reset"]:hover  {
   background-color: #fff;
@@ -11199,6 +11202,7 @@ a:hover {
   color: #000;
 }
 
+.g-recaptcha:active,
 .form-control[type="submit"]:active,
 .form-control[type="reset"]:active {
   background: rgba(33, 37, 41, 0.2);
@@ -11848,6 +11852,7 @@ body.light-theme .form-control:focus {
   border-color: rgba(33, 37, 41, 0.6);
 }
 
+body.light-theme .g-recaptcha:focus, body.light-theme .g-recaptcha:hover,
 body.light-theme .form-control[type="submit"]:focus, body.light-theme .form-control[type="submit"]:hover,
 body.light-theme .form-control[type="reset"]:focus, body.light-theme .form-control[type="reset"]:hover {
   background-color: #212529;
@@ -11855,6 +11860,7 @@ body.light-theme .form-control[type="reset"]:focus, body.light-theme .form-contr
   color: #fff;
 }
 
+body.light-theme .g-recaptcha:active,
 body.light-theme .form-control[type="submit"]:active,
 body.light-theme .form-control[type="reset"]:active {
   background: #fff;
@@ -11929,4 +11935,37 @@ body.dark-theme {
 body.light-theme .cookie-overlay {
   background: #000;
   color: #fff;
+}
+
+.g-recaptcha {
+	cursor: pointer;
+	display: block;
+	width: 100%;
+	height: calc(1.5em + 0.75rem + 2px);
+	padding: 0.375rem 0.75rem;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	line-height: 20px;
+	border-radius: 0.25rem;
+	border: 2px solid #6c757d;
+	background-color: rgba(33, 37, 41, 0.2);
+	margin-bottom: 10px;
+	color: #fff;
+}
+
+body.light-theme .g-recaptcha {
+	border: 2px solid rgb(173, 181, 189);
+  background-color: rgb(226, 229, 233);
+  color: rgb(73, 80, 87)
+}
+
+#g-recaptcha-response {
+  display: block !important;
+  position: absolute;
+  margin: -78px 0 0 0 !important;
+  width: 302px !important;
+  height: 76px !important;
+  z-index: -999999;
+  opacity: 0;
 }
