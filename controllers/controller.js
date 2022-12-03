@@ -342,6 +342,7 @@ exports.sign_up_get = function(req, res, next) {
 	res.render('signup', {
 		title: 'Sign Up',
     signedIn: isSignedIn(req),
+    csrfToken: req.session.csrf,
 	})
 }
 
@@ -356,11 +357,22 @@ exports.sign_up_post = [
   
   (req, res, next) => {
     const errors = validationResult(req);
+
+    if (!req.body.csrf || req.body.csrf !== req.session.csrf) {
+      res.render('signup', {
+        title: 'Sign Up',
+        signedIn: isSignedIn(req),
+        csrfToken: req.session.csrf,
+        error: 'Niet met de csrf token spelen aub!'
+      })
+    }
+
     User.findOne({ email: req.body.email }).then(user => {
       if (user) {
         return res.status(400).render('signup', {
           title: 'Sign Up',
           error: 'Email wordt al gebruikt',
+          csrfToken: req.session.csrf,
         })
       }
 
@@ -390,6 +402,7 @@ exports.log_in_get = function(req, res, next) {
 	res.render('login', {
 		title: 'Log In',
     signedIn: isSignedIn(req),
+    csrfToken: req.session.csrf,
 	})
 }
 
@@ -399,6 +412,17 @@ exports.log_in_post = [
 
   (req, res, next) => {
     const errors = validationResult(req);
+
+    if (!req.body.csrf || req.body.csrf !== req.session.csrf) {
+      res.render('login', {
+        title: 'Log In',
+        signedIn: isSignedIn(req),
+        csrfToken: req.session.csrf,
+        error: 'Niet met de csrf token spelen aub!'
+      })
+      return;
+    }
+
     User.findOne({ email: req.body.email }).then(user => {
       if (user) {
         bcrypt.compare(req.body.password, user.password, function(err, isMatch) {
@@ -427,6 +451,7 @@ exports.log_in_post = [
               title: 'Log In',
               error: 'Wachtwoord is niet juist.',
               signedIn: isSignedIn(req),
+              csrfToken: req.session.csrf,
             });
           }          
         })
@@ -437,6 +462,7 @@ exports.log_in_post = [
           title: 'Log In',
           error: 'Geen gebruiken met dit email gevonden.',
           signedIn: isSignedIn(req),
+          csrfToken: req.session.csrf,
         });
       }
     })
