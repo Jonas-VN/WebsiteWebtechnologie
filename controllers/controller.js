@@ -156,7 +156,7 @@ exports.ticket_verkoop_post = [
             }
             res.render('tribuneticket', { 
               title: 'Ticket',
-              name: person.first_name, 
+              person: person, 
               tribune: results.tribune,
             });
           }
@@ -297,7 +297,7 @@ exports.bus_verkoop_post = [
             }
             res.render('busticket', { 
               title: 'Bus Ticket',
-              name: person.first_name, 
+              person: person, 
               bus: results.bus,
             });
           }
