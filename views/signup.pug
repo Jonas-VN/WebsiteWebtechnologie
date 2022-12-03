@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  .container.page-container
+   .col-md-10.col-lg-8.m-auto
+    h6.title.mb-4.mt-5.pt-5 Sign Up   
+    
+    form(action='' method='POST').mt-5.pt-5
+      .form-group
+        label(for='exampleInputName1') Name
+        input#exampleInputName1.form-control(type='text', name='name', required='')
+      .form-group
+        label(for='exampleInputEmail1') Email address
+        input#exampleInputEmail1.form-control(type='email', name='email', aria-describedby='emailHelp', required='')
+      .form-group
+        label(for='exampleInputAge1') Age
+        input#exampleInputAge1.form-control(type='number', name='age', required='')
+      .form-group
+        label(for='exampleFormControlSelect1') Gender
+        select#exampleFormControlSelect1.form-control(name='gender', required='')
+          option Male
+          option Female
+          option Others
+      .form-group
+        label(for='exampleInputPassword1') Password
+        input#exampleInputPassword1.form-control(type='password', name='password', required='')
+      .form-group
+        label(for='exampleFormQuestion1') Security Question
+        select#exampleFormQuestion1.form-control(name='question', required='')
+          option What is the name of your first school
+          option Name of your first friend
+          option Name of the place where you spent your first vacation
+      .form-group
+        label(for='exampleInputAnswer1') Answer
+        input#exampleInputAnswer1.form-control(type='text', name='answer', required='')
+      button.btn.btn-primary(type='submit') Submit 
+    if error
+      p!= error

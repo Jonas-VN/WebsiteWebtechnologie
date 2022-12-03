@@ -15,13 +15,17 @@ router.post('/busverkoop', controller.bus_verkoop_post);
 
 router.get('/cookiepolicy', function(req, res, next) {
 	res.render('cookiepolicy', { title: 'Cookie Policy' });
-  });
+});
 
 router.get('/privacypolicy', function(req, res, next) {
 	res.render('privacypolicy', { title: 'Privacy Policy' });
-  });
+});
 
 router.get('/tribuneticket', function(req, res, next) {
 	res.render('tribuneticket', { title: 'Ticket' });
-  });
+});
+
+router.get('/signup', controller.sign_up_get);
+router.post('/signup', controller.sign_up_post);
+ 
 module.exports = router;

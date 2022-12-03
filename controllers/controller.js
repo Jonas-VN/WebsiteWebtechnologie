@@ -3,10 +3,12 @@ const Person = require('../models/person');
 const Ticket = require('../models/ticket');
 const Bus = require('../models/bus');
 const BusTicket = require('../models/busTicket');
+const User = require('../models/user');
 const async = require("async");
 const { body, validationResult } = require('express-validator');
 var { randomBytes } = require('crypto');
-const tribune = require('../models/tribune');
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 
 exports.index = function(req, res, next) {
@@ -286,4 +288,61 @@ exports.bus_verkoop_post = [
         res.redirect('/');
     });
   })}
+]
+
+exports.sign_up_get = function(req, res, next) {
+	res.render('signup', {
+		title: 'Sign Up',
+	})
+}
+
+exports.sign_up_post = [
+  body('namme', 'Naam mag niet leeg zijn').escape(),
+  body('email', 'Email mag niet leeg zijn.').escape(),
+  body('age', 'Leeftijd mag niet leeg zijn.').escape(),
+  body('gender', 'Gender mag niet leeg zijn').escape(),
+  body('password', 'Wachtwoord mag niet leeg zijn.').escape(),
+  body('question', 'Veiligheidsvraag mag niet leeg zijn.').escape(),
+  body('answer', 'Veiligheidsvraaga antwoord mag niet leeg zijn.').escape(),
+  
+  (req, res, next) => {
+    const errors = validationResult(req);
+    console.log(req.body)
+    User.findOne({ email: req.body.email }).then(user => {
+      if (user) {
+        console.log(user);
+        return res.status(400).render('signup', {
+          title: 'Sign Up',
+          error: 'Email wordt al gebruikt',
+        })
+      }
+      console.log('Nieuwe user maken');
+      console.log(req.body.name);
+      // Email is nog niet in gebruik -> user maken
+      bcrypt.hash(req.body.password, 10, function(err, hashedPassword) {
+        console.log('222')
+        console.log(hashedPassword)
+        if (err) {
+          return next(err);
+        }
+        const user = new User({
+          name: req.body.name,
+          email: req.body.email,
+          age: req.body.age,
+          gender: req.body.gender,
+          password: hashedPassword,
+          question: req.body.question,
+          answer: req.body.answer
+        })
+        user.save((err) => {
+          if (err) {
+            return next(err);
+          }
+          // Succesvol de user opgeslaan
+          console.log('User goed opgeslagen');
+          res.redirect('/');
+        })
+      })
+    })
+  }
 ]
