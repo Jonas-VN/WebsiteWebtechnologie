@@ -37,6 +37,8 @@ block content
       
       input.form-control(type='text' name='answer' size='100%' placeholder='Je antwoord' required='true')
 
+      input.form-control(type='hidden' name='csrf' required='true' value=csrfToken)
+
       #recaptcha(style= "display: flex; justify-content: center;" )
 
       input.form-control(type='submit' value='Sign up')

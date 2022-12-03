@@ -4,6 +4,7 @@ const Ticket = require('../models/ticket');
 const Bus = require('../models/bus');
 const BusTicket = require('../models/busTicket');
 const User = require('../models/user');
+
 const async = require("async");
 const { body, validationResult } = require('express-validator');
 var { randomBytes } = require('crypto');
@@ -399,18 +400,14 @@ exports.log_in_post = [
   (req, res, next) => {
     const errors = validationResult(req);
     User.findOne({ email: req.body.email }).then(user => {
-      console.log(user);
       if (user) {
         bcrypt.compare(req.body.password, user.password, function(err, isMatch) {
           if (err) {
             return next(err);
           }
-          console.log(isMatch);
           // Password is juist
           if (isMatch) {
             const payload = {id: user._id, name: user.name};
-            console.log('succesvolle sing in')
-            console.log(payload);
             jwt.sign(payload, 
               'verySecretValue',
               {expiresIn: 3600},
@@ -426,7 +423,6 @@ exports.log_in_post = [
           }
           // Fout passwoord
           else {
-            console.log('wachtwoord fout');
             res.render('login', {
               title: 'Log In',
               error: 'Wachtwoord is niet juist.',
@@ -437,7 +433,6 @@ exports.log_in_post = [
       }
       // Foute email
       else {
-        console.log('email fout');
         res.render('login', {
           title: 'Log In',
           error: 'Geen gebruiken met dit email gevonden.',
@@ -449,11 +444,8 @@ exports.log_in_post = [
 ]
 
 exports.log_out = function(req, res, next) {
-  console.log(isSignedIn(req));
   if (isSignedIn(req)) {
-    console.log("Signing out");
     res.clearCookie('jwt');
   }
-  console.log('redirecting');
   res.redirect('/')
 }
