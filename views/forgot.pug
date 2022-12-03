@@ -11,22 +11,30 @@ block head
 block content
   .container.page-container
    .col-md-10.col-lg-8.m-auto
-    h6.title.mb-4.mt-5.pt-5 Log in   
+    h6.title.mb-4.mt-5.pt-5 Wachtwoord vergeten  
+    
+    form(action='' method='POST').mt-5.pt-5
 
-    form(action='' method='POST')
       input.form-control(type='email' name='email' placeholder='Je email' required='true')
-     
-      input.form-control(type='password' name='password' placeholder='Je wachtwoord' required='true')
-     
+      
+
+      label Veiligheidsvraag
+      select.form-control(name='question', required='')
+        option Wat is de naam van je eerste school?
+        option Wat is de naam van je eerst vriend?
+        option Wat is de naam van je eerste vakantiebestemming?
+      
+      input.form-control(type='text' name='answer' size='100%' placeholder='Je antwoord' required='true')
+
+      input.form-control(type='password' name='password' placeholder='Je nieuw wachtwoord' required='true')
+
       input.form-control(type='hidden' name='csrf' required='true' value=csrfToken)
 
       #recaptcha(style= "display: flex; justify-content: center;" )
 
-      input.form-control(type='submit' value='Log in')
+      input.form-control(type='submit' value='Zet nieuw wachtwoord')
 
     script(src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit' async='' defer='')
-
-    a(href='/forgot') Wachtwoord vergeten
     
     if error
       p!= error

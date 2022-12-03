@@ -347,7 +347,7 @@ exports.sign_up_get = function(req, res, next) {
 }
 
 exports.sign_up_post = [
-  body('namme', 'Naam mag niet leeg zijn').escape(),
+  body('name', 'Naam mag niet leeg zijn').escape(),
   body('email', 'Email mag niet leeg zijn.').escape(),
   body('age', 'Leeftijd mag niet leeg zijn.').escape(),
   body('gender', 'Gender mag niet leeg zijn').escape(),
@@ -475,3 +475,61 @@ exports.log_out = function(req, res, next) {
   }
   res.redirect('/')
 }
+
+exports.forgot_get = function(req, res, next) {
+  res.render('forgot', {
+		title: 'Wachtwoord vergeten',
+    signedIn: isSignedIn(req),
+    csrfToken: req.session.csrf,
+	})
+}
+
+exports.forgot_post = [
+  body('email', 'Email mag niet leeg zijn.').escape(),
+  body('question', 'Veiligheidsvraag mag niet leeg zijn.').escape(),
+  body('answer', 'Veiligheidsvraag antwoord mag niet leeg zijn.').escape(),
+  body('password', 'Wachtwoord mag niet leeg zijn.').escape(),  
+
+  (req, res, next) => {
+    if (!req.body.csrf || req.body.csrf !== req.session.csrf) {
+      res.render('forgot', {
+        title: 'Wachtwoord vergeten',
+        signedIn: isSignedIn(req),
+        csrfToken: req.session.csrf,
+        error: 'Niet met de csrf token spelen aub!'
+      })
+    }
+
+    User.findOne({ email: req.body.email }).then(user => {
+      if (!user) {
+        return res.render('forgot', {
+          title: 'Wachtwoord vergeten',
+          signedIn: isSignedIn(req),
+          csrfToken: req.session.csrf,
+          error: 'Email niet gevonden'
+        });
+      }
+
+      else if (req.body.question !== user.question || req.body.answer.toLowerCase() !== user.answer.toLowerCase()) {
+        return res.render('forgot', {
+          title: 'Wachtwoord vergeten',
+          signedIn: isSignedIn(req),
+          csrfToken: req.session.csrf,
+          error: 'Veiligheidsvraag fout beantwoord!'
+        });
+      }
+      // Alles correct ingevuld
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(req.body.password, salt, (err, hash) => {
+          if (err) {
+            return next(err);
+          }
+          user.password = hash;
+          user.save().then(res.redirect('/login')).catch(err);
+        })
+      });
+
+    })
+
+  }
+]

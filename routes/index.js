@@ -37,5 +37,8 @@ router.post('/login', controller.log_in_post);
 
 router.get('/logout', controller.log_out);
 
+router.get('/forgot', controller.forgot_get);
+router.post('/forgot', controller.forgot_post);
+
  
 module.exports = router;
