@@ -1,0 +1,35 @@
+doctype html
+head
+  link(rel='stylesheet' href='assets/css/ticket.css')
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+  link(rel="icon" href='assets/imgs/logo.png')
+  title= title
+
+body
+  .cardWrap
+    .card.cardLeft
+      h1 Bekerfinale 
+        span 2014
+      .title
+        h2 KSC Lokeren - Zulte Waregem
+        span voetbal
+      .name
+        h2 #{name}
+        span naam
+      .seat
+        h2 #{tribune.number}
+        span tribune
+      .time
+        h2 20:30
+        span tijd
+    .card.cardRight
+      .eye
+      .number
+        h3 #{tribune.number}
+        span tribune
+      .barcode
+
+  button(onclick='window.print()') Print je ticket
+  form(action='/#')
+    input(type='submit' value='Terug')

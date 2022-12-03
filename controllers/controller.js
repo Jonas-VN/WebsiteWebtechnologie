@@ -6,6 +6,7 @@ const BusTicket = require('../models/busTicket');
 const async = require("async");
 const { body, validationResult } = require('express-validator');
 var { randomBytes } = require('crypto');
+const tribune = require('../models/tribune');
 
 
 exports.index = function(req, res, next) {
@@ -140,7 +141,26 @@ exports.ticket_verkoop_post = [
         if (err) {
           return next(err);
         }
-        res.redirect('/');
+
+        async.parallel(
+          {
+            tribune(callback) {
+              Tribune.findById(req.body.tribune).exec(callback);
+            }
+          },
+          (err, results) => {
+            if (err) {
+              return next(err);
+            }
+            res.render('tribuneticket', { 
+              title: 'Ticket',
+              name: person.first_name, 
+              tribune: results.tribune,
+            });
+          }
+        )
+        
+       
     });
   })}
 ]

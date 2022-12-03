@@ -18,7 +18,7 @@ window.addEventListener('load', () => {
 	if ($recaptcha) {
 	  $recaptcha.setAttribute('required', 'required');
 	}
-  })
+})
 
 // toggle 
 $(document).ready(function(){

@@ -21,5 +21,7 @@ router.get('/privacypolicy', function(req, res, next) {
 	res.render('privacypolicy', { title: 'Privacy Policy' });
   });
 
-  
+router.get('/tribuneticket', function(req, res, next) {
+	res.render('tribuneticket', { title: 'Ticket' });
+  });
 module.exports = router;
