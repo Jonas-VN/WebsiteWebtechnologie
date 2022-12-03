@@ -25,7 +25,14 @@ router.get('/tribuneticket', function(req, res, next) {
 	res.render('tribuneticket', { title: 'Ticket' });
 });
 
+router.get('/busticket', function(req, res, next) {
+	res.render('busticket', { title: 'Bus Ticket' });
+});
+
 router.get('/signup', controller.sign_up_get);
 router.post('/signup', controller.sign_up_post);
+
+//router.get('/signin', controller.sign_in_get);
+//router.post('/signin', controller.sign_in_post);
  
 module.exports = router;

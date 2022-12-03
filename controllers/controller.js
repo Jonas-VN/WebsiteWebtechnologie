@@ -285,7 +285,23 @@ exports.bus_verkoop_post = [
         if (err) {
           return next(err);
         }
-        res.redirect('/');
+        async.parallel(
+          {
+            bus(callback) {
+              Bus.findById(req.body.bus).exec(callback);
+            }
+          },
+          (err, results) => {
+            if (err) {
+              return next(err);
+            }
+            res.render('busticket', { 
+              title: 'Bus Ticket',
+              name: person.first_name, 
+              bus: results.bus,
+            });
+          }
+        )
     });
   })}
 ]
@@ -307,21 +323,15 @@ exports.sign_up_post = [
   
   (req, res, next) => {
     const errors = validationResult(req);
-    console.log(req.body)
     User.findOne({ email: req.body.email }).then(user => {
       if (user) {
-        console.log(user);
         return res.status(400).render('signup', {
           title: 'Sign Up',
           error: 'Email wordt al gebruikt',
         })
       }
-      console.log('Nieuwe user maken');
-      console.log(req.body.name);
       // Email is nog niet in gebruik -> user maken
       bcrypt.hash(req.body.password, 10, function(err, hashedPassword) {
-        console.log('222')
-        console.log(hashedPassword)
         if (err) {
           return next(err);
         }
@@ -339,7 +349,6 @@ exports.sign_up_post = [
             return next(err);
           }
           // Succesvol de user opgeslaan
-          console.log('User goed opgeslagen');
           res.redirect('/');
         })
       })
