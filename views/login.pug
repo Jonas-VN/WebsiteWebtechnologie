@@ -1,0 +1,30 @@
+extends layout
+
+block head 
+  script(type='text/javascript').
+    var onloadCallback = function() {
+    grecaptcha.render('recaptcha', {
+    'sitekey' : '6LfPNk4jAAAAAOstsVl-cvM7tkmGbFmO_zK4ZH3N'
+    });
+    };
+
+block content
+  .container.page-container
+   .col-md-10.col-lg-8.m-auto
+    h6.title.mb-4.mt-5.pt-5 Log in   
+
+    form(action='' method='POST')
+      input.form-control(type='email' name='email' placeholder='Je email' required='true')
+     
+      input.form-control(type='password' name='password' placeholder='Je wachtwoord' required='true')
+     
+      #recaptcha(style= "display: flex; justify-content: center;" )
+
+      input.form-control(type='submit' value='Log in')
+
+    script(src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit' async='' defer='')
+
+    a(href='forgetPassword') Wachtwoord vergeten
+    
+    if error
+      p!= error

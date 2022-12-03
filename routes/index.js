@@ -32,7 +32,10 @@ router.get('/busticket', function(req, res, next) {
 router.get('/signup', controller.sign_up_get);
 router.post('/signup', controller.sign_up_post);
 
-//router.get('/signin', controller.sign_in_get);
-//router.post('/signin', controller.sign_in_post);
+router.get('/login', controller.log_in_get);
+router.post('/login', controller.log_in_post);
+
+router.get('/logout', controller.log_out);
+
  
 module.exports = router;

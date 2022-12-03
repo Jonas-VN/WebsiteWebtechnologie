@@ -10,6 +10,13 @@ var { randomBytes } = require('crypto');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
+const isSignedIn = function(req) {
+  var token = null;
+  if(req && req.cookies) {
+      token = req.cookies['jwt'];
+  }
+  return token !== undefined;
+};
 
 exports.index = function(req, res, next) {
   // Set session token on first visit
@@ -30,29 +37,41 @@ exports.index = function(req, res, next) {
       res.render('index', {
         title: 'Home',
         tribunes: results.list_tribunes,
+        signedIn: isSignedIn(req),
       });
     }
   );
 };
 
 exports.ticket_verkoop_get = function(req, res, next) {
-  async.parallel(
-    {
-      list_tribunes(callback) {
-        Tribune.find({}, callback)
+  if (isSignedIn(req)) {
+    async.parallel(
+      {
+        list_tribunes(callback) {
+          Tribune.find({}, callback)
+        }
+      },
+      (err, results) => {
+        if (err) {
+          return next(err);
+        }
+        res.render('ticketverkoop', {
+          title: 'Ticketverkoop',
+          tribunes: results.list_tribunes,
+          csrfToken: req.session.csrf,
+          signedIn: isSignedIn(req),
+        });
       }
-    },
-    (err, results) => {
-      if (err) {
-        return next(err);
-      }
-      res.render('ticketverkoop', {
-        title: 'Ticketverkoop',
-        tribunes: results.list_tribunes,
-        csrfToken: req.session.csrf,
-      });
-    }
-  );
+    );
+  }
+  else {
+    res.render('youmustbeloggedin', {
+      title: 'Unauthorized',
+      signedIn: isSignedIn(req),
+    })
+  }
+
+  
 };
 
 exports.ticket_verkoop_post = [
@@ -102,6 +121,7 @@ exports.ticket_verkoop_post = [
             tribunes: results.list_tribunes,
             csrfToken: req.session.csrf,
             errors: errors.array(),
+            signedIn: isSignedIn(req),
           });
         }
       );
@@ -158,6 +178,7 @@ exports.ticket_verkoop_post = [
               title: 'Ticket',
               person: person, 
               tribune: results.tribune,
+              signedIn: isSignedIn(req),
             });
           }
         )
@@ -168,23 +189,32 @@ exports.ticket_verkoop_post = [
 ]
 
 exports.bus_verkoop_get = function(req, res, next) {
-  async.parallel(
-    {
-      list_busses(callback) {
-        Bus.find({}, callback)
+  if (isSignedIn(req)) {
+    async.parallel(
+      {
+        list_busses(callback) {
+          Bus.find({}, callback)
+        }
+      },
+      (err, results) => {
+        if (err) {
+          return next(err);
+        }
+        res.render('busverkoop', {
+          title: 'Busverkoop',
+          busses: results.list_busses,
+          csrfToken: req.session.csrf,
+          signedIn: isSignedIn(req),
+        });
       }
-    },
-    (err, results) => {
-      if (err) {
-        return next(err);
-      }
-      res.render('busverkoop', {
-        title: 'Busverkoop',
-        busses: results.list_busses,
-        csrfToken: req.session.csrf,
-      });
-    }
-  );
+    );
+  }
+  else {
+    res.render('youmustbeloggedin', {
+      title: 'Unauthorized',
+      signedIn: isSignedIn(req),
+    })
+  }
 };
 
 exports.bus_verkoop_post = [
@@ -237,6 +267,7 @@ exports.bus_verkoop_post = [
             busses: results.list_busses,
             csrfToken: req.session.csrf,
             errors: errors.array(),
+            signedIn: isSignedIn(req),
           });
         }
       );
@@ -309,6 +340,7 @@ exports.bus_verkoop_post = [
 exports.sign_up_get = function(req, res, next) {
 	res.render('signup', {
 		title: 'Sign Up',
+    signedIn: isSignedIn(req),
 	})
 }
 
@@ -319,7 +351,7 @@ exports.sign_up_post = [
   body('gender', 'Gender mag niet leeg zijn').escape(),
   body('password', 'Wachtwoord mag niet leeg zijn.').escape(),
   body('question', 'Veiligheidsvraag mag niet leeg zijn.').escape(),
-  body('answer', 'Veiligheidsvraaga antwoord mag niet leeg zijn.').escape(),
+  body('answer', 'Veiligheidsvraag antwoord mag niet leeg zijn.').escape(),
   
   (req, res, next) => {
     const errors = validationResult(req);
@@ -330,28 +362,98 @@ exports.sign_up_post = [
           error: 'Email wordt al gebruikt',
         })
       }
+
       // Email is nog niet in gebruik -> user maken
-      bcrypt.hash(req.body.password, 10, function(err, hashedPassword) {
-        if (err) {
-          return next(err);
-        }
-        const user = new User({
-          name: req.body.name,
-          email: req.body.email,
-          age: req.body.age,
-          gender: req.body.gender,
-          password: hashedPassword,
-          question: req.body.question,
-          answer: req.body.answer
-        })
-        user.save((err) => {
+      const newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        age: req.body.age,
+        gender: req.body.gender,
+        password: req.body.password,
+        question: req.body.question,
+        answer: req.body.answer
+      });
+
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if(err) return next(err);
+            newUser.password = hash;
+            newUser.save().then(res.redirect('/login')).catch(err);
+        });
+      });
+    });
+  }
+]
+
+exports.log_in_get = function(req, res, next) {
+	res.render('login', {
+		title: 'Log In',
+    signedIn: isSignedIn(req),
+	})
+}
+
+exports.log_in_post = [
+  body('email', 'Email mag niet leeg zijn.').escape(),
+  body('password', 'Passwoord mag niet leeg zijn.').escape(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+    User.findOne({ email: req.body.email }).then(user => {
+      console.log(user);
+      if (user) {
+        bcrypt.compare(req.body.password, user.password, function(err, isMatch) {
           if (err) {
             return next(err);
           }
-          // Succesvol de user opgeslaan
-          res.redirect('/');
+          console.log(isMatch);
+          // Password is juist
+          if (isMatch) {
+            const payload = {id: user._id, name: user.name};
+            console.log('succesvolle sing in')
+            console.log(payload);
+            jwt.sign(payload, 
+              'verySecretValue',
+              {expiresIn: 3600},
+              (err, token) => {
+                // Set session cookie
+                res.cookie('jwt', token, {
+                    expires: new Date(Date.now() + 3600 * 1000),
+                    secure: false,
+                    httpOnly: true,
+                });
+                res.redirect('/');
+              })
+          }
+          // Fout passwoord
+          else {
+            console.log('wachtwoord fout');
+            res.render('login', {
+              title: 'Log In',
+              error: 'Wachtwoord is niet juist.',
+              signedIn: isSignedIn(req),
+            });
+          }          
         })
-      })
+      }
+      // Foute email
+      else {
+        console.log('email fout');
+        res.render('login', {
+          title: 'Log In',
+          error: 'Geen gebruiken met dit email gevonden.',
+          signedIn: isSignedIn(req),
+        });
+      }
     })
   }
 ]
+
+exports.log_out = function(req, res, next) {
+  console.log(isSignedIn(req));
+  if (isSignedIn(req)) {
+    console.log("Signing out");
+    res.clearCookie('jwt');
+  }
+  console.log('redirecting');
+  res.redirect('/')
+}

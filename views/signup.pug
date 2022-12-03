@@ -1,38 +1,47 @@
 extends layout
 
+block head 
+  script(type='text/javascript').
+    var onloadCallback = function() {
+    grecaptcha.render('recaptcha', {
+    'sitekey' : '6LfPNk4jAAAAAOstsVl-cvM7tkmGbFmO_zK4ZH3N'
+    });
+    };
+
 block content
   .container.page-container
    .col-md-10.col-lg-8.m-auto
     h6.title.mb-4.mt-5.pt-5 Sign Up   
     
     form(action='' method='POST').mt-5.pt-5
-      .form-group
-        label(for='exampleInputName1') Name
-        input#exampleInputName1.form-control(type='text', name='name', required='')
-      .form-group
-        label(for='exampleInputEmail1') Email address
-        input#exampleInputEmail1.form-control(type='email', name='email', aria-describedby='emailHelp', required='')
-      .form-group
-        label(for='exampleInputAge1') Age
-        input#exampleInputAge1.form-control(type='number', name='age', required='')
-      .form-group
-        label(for='exampleFormControlSelect1') Gender
-        select#exampleFormControlSelect1.form-control(name='gender', required='')
-          option Male
-          option Female
-          option Others
-      .form-group
-        label(for='exampleInputPassword1') Password
-        input#exampleInputPassword1.form-control(type='password', name='password', required='')
-      .form-group
-        label(for='exampleFormQuestion1') Security Question
-        select#exampleFormQuestion1.form-control(name='question', required='')
-          option What is the name of your first school
-          option Name of your first friend
-          option Name of the place where you spent your first vacation
-      .form-group
-        label(for='exampleInputAnswer1') Answer
-        input#exampleInputAnswer1.form-control(type='text', name='answer', required='')
-      button.btn.btn-primary(type='submit') Submit 
+
+      input.form-control(type='text' name='name' size='100%' placeholder='Je naam' required='true')
+
+      input.form-control(type='email' name='email' placeholder='Je email' required='true')
+
+      input.form-control(type='number' name='age' placeholder='Je leeftijd' required='true')
+
+      label Gender
+      select.form-control(name='gender', required='')
+        option Man
+        option Vrouw
+        option Ander 
+      
+      input.form-control(type='password' name='password' placeholder='Je wachtwoord' required='true')
+
+      label Veiligheidsvraag
+      select.form-control(name='question', required='')
+        option Wat is de naam van je eerste school?
+        option Wat is de naam van je eerst vriend?
+        option Wat is de naam van je eerste vakantiebestemming?
+      
+      input.form-control(type='text' name='answer' size='100%' placeholder='Je antwoord' required='true')
+
+      #recaptcha(style= "display: flex; justify-content: center;" )
+
+      input.form-control(type='submit' value='Sign up')
+
+    script(src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit' async='' defer='')
+    
     if error
       p!= error
