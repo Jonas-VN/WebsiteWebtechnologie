@@ -403,7 +403,7 @@ exports.log_in_get = function(req, res, next) {
 
 exports.log_in_post = [
   body('email', 'Email mag niet leeg zijn.').escape(),
-  body('password', 'Passwoord mag niet leeg zijn.').escape(),
+  body('password', 'Wachtwoord mag niet leeg zijn.').escape(),
 
   (req, res, next) => {
     const errors = validationResult(req);
@@ -455,7 +455,7 @@ exports.log_in_post = [
       else {
         res.render('login', {
           title: 'Log In',
-          error: 'Geen gebruiken met dit email gevonden.',
+          error: 'Geen gebruiker gevonden met dit email.',
           signedIn: isSignedIn(req),
           csrfToken: req.session.csrf,
         });

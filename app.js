@@ -6,11 +6,29 @@ var logger = require('morgan');
 const mongoose = require("mongoose");
 var cookieSession = require('cookie-session');
 var { randomBytes } = require('crypto');
+const compression = require("compression");
+const helmet = require("helmet");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+app.use(compression()); // Compress all routes
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            frameSrc: ["'self'", "*.google.com/", "*.youtube-nocookie.com/", "*.twitter.com/"],
+			scriptSrc: ["'self'", "*.google.com/", "*.twitter.com/", "'unsafe-inline'", "*.gstatic.com/"],
+
+        }
+    },
+}));
+
+app.use((req, res, next) => {
+    res.header("Cross-Origin-Embedder-Policy", "cross-origin")
+    next()
+})
 
 // Set up mongoose connection
 const mongoDB = "mongodb+srv://ginijo:azerty123%40@testwebsitelokeren.ky1irsu.mongodb.net/website_lokeren?retryWrites=true&w=majority";

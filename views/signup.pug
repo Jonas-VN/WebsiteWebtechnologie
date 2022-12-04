@@ -13,7 +13,7 @@ block content
    .col-md-10.col-lg-8.m-auto
     h6.title.mb-4.mt-5.pt-5 Sign Up   
     
-    form(action='' method='POST' onreset="grecaptcha.reset();").mt-5.pt-5
+    form(action='' method='POST').mt-5.pt-5
 
       input.form-control(type='text' name='name' size='100%' placeholder='Je naam' required='true')
 
@@ -40,8 +40,6 @@ block content
       input.form-control(type='hidden' name='csrf' required='true' value=csrfToken)
 
       #recaptcha(style= "display: flex; justify-content: center;" )
-
-      input.form-control(type='reset')
 
       input.form-control(type='submit' value='Sign up')
 

@@ -13,7 +13,7 @@ block content
     .col-md-10.col-lg-8.m-auto
       h6.title.mb-4.mt-5.pt-5 Ticketverkoop 
 
-      form(method='POST' action='' onreset="grecaptcha.reset();")
+      form(method='POST' action='')
         select(name='tribune')
           each tribune in tribunes
             option(value=tribune._id) Tribune #{tribune.number} (€#{tribune.price})
@@ -24,7 +24,7 @@ block content
 
         input.form-control(type='email' name='email' placeholder='Je email' required='true')
 
-        input.form-control(type='text' name='birth_date' placeholder='Je geboortedatum' required='true' onfocus="this.type='date'")
+        input.form-control#geboortedatum(type='text' name='birth_date' placeholder='Je geboortedatum' required='true')
 
         label(for='policy')  
         p
@@ -34,8 +34,6 @@ block content
         input.form-control(type='hidden' name='csrf' required='true' value=csrfToken)
 
         #recaptcha(style= "display: flex; justify-content: center;" )
-
-        input.form-control(type='reset')
 
         input.form-control(type='submit' value='Bestel')
 

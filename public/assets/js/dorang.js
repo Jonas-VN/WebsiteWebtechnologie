@@ -81,6 +81,10 @@ $(document).ready(function(){
         $('body').removeClass('light-theme');
         setCookie("theme", "dark", 30);
     });
+
+	$("#geboortedatum").click(function(){
+		$("#geboortedatum").attr("type", "date")
+	});
 });
 
 // Create cookie
