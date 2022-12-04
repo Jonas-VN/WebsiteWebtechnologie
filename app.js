@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 })
 
 // Set up mongoose connection
-const mongoDB = "mongodb+srv://ginijo:azerty123%40@testwebsitelokeren.ky1irsu.mongodb.net/website_lokeren?retryWrites=true&w=majority";
+const mongoDB = process.env.MONGODB_URI || "mongodb+srv://ginijo:azerty123%40@testwebsitelokeren.ky1irsu.mongodb.net/website_lokeren?retryWrites=true&w=majority";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));

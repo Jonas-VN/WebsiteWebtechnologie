@@ -30,6 +30,15 @@ body
         span tribune
       .barcode
 
-  button(onclick='window.print()') Print je ticket
+  button#printpage Print je ticket
   form(action='/')
     input(type='submit' value='Terug')
+
+  // core
+  script(src='assets/vendors/bootstrap/bootstrap.bundle.js')
+  script(src='assets/vendors/jquery/jquery-3.4.1.js')
+  
+  // bootstrap affix
+  script(src='assets/vendors/bootstrap/bootstrap.affix.js')
+  // Dorang js
+  script(src='assets/js/dorang.js')

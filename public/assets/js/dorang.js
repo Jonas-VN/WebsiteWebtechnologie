@@ -82,8 +82,12 @@ $(document).ready(function(){
         setCookie("theme", "dark", 30);
     });
 
-	$("#geboortedatum").click(function(){
+	$("#geboortedatum").focus(function(){
 		$("#geboortedatum").attr("type", "date")
+	});
+
+	$("#printpage").click(function(){
+		window.print();
 	});
 });
 
