@@ -53,7 +53,7 @@ app.use(cookieSession({
 	maxAge: 24 * 60 * 60 * 1000,                  // cookie's lifespan
 	sameSite: 'lax',                              // controls when cookies are sent
 	path: '/',                                    // explicitly set this for security purposes
-	secure: false,				      // cookie only sent on HTTPS
+	secure: false,				      			  // cookie only sent on HTTPS
 	httpOnly: true                                // cookie is not available to JavaScript (client)
   }));
   

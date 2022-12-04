@@ -11,7 +11,6 @@ if (!userArgs[0].startsWith('mongodb')) {
 }
 */
 var async = require('async')
-var Person = require('./models/person')
 var Tribune = require('./models/tribune')
 var Bus = require('./models/bus')
 
@@ -23,25 +22,8 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-var persons = [];
 var tribunes = [];
 var busses = [];
-
-function personCreate(first_name, family_name, d_birth, mail, cb) {
-  persondetail = {first_name:first_name , family_name: family_name, date_of_birth: d_birth, email: mail}
-  
-  var person = new Person(persondetail);
-       
-  person.save(function (err) {
-    if (err) {
-      cb(err, null)
-      return
-    }
-    console.log('New Person: ' + person);
-    persons.push(person)
-    cb(null, person)
-  }  );
-}
 
 function tribuneCreate(nr, desc, pr, im, cb) {
   tribunedetail = {number: nr, description: desc, price: pr, image: im}
@@ -73,19 +55,6 @@ function busCreate(nr, dep, cb) {
     busses.push(bus)
     cb(null, bus)
   }  );
-}
-
-function createPersons(cb) {
-    async.series([
-        function(callback) {
-          personCreate('Patrick', 'Rothfuss', '1973-06-06', 'patje@gmail.com', callback);
-        },
-        function(callback) {
-          personCreate('Ben', 'Bova', '1932-11-8', 'ben.bove@hotmail.com', callback);
-        },
-        ],
-        // optional callback
-        cb);
 }
 
 function createTribunes(cb) {
@@ -127,6 +96,7 @@ function createBus(cb) {
 
 async.series([
   createBus,
+  createTribunes,
 ],
 // Optional callback
 function(err, results) {
