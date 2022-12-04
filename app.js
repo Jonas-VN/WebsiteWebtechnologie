@@ -19,7 +19,7 @@ app.use(helmet({
     contentSecurityPolicy: {
         directives: {
             frameSrc: ["'self'", "*.google.com/", "*.youtube-nocookie.com/", "*.twitter.com/"],
-			scriptSrc: ["'self'", "*.google.com/", "*.twitter.com/", "'unsafe-inline'", "*.gstatic.com/"],
+			scriptSrc: ["'self'", "*.google.com/", "*.twitter.com/", "'unsafe-inline'", "*.gstatic.com/", "*.googletagmanager.com/"],
 
         }
     },
