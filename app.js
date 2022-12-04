@@ -20,7 +20,7 @@ app.use(helmet({
         directives: {
             frameSrc: ["'self'", "*.google.com/", "*.youtube-nocookie.com/", "*.twitter.com/"],
 			scriptSrc: ["'self'", "*.google.com/", "*.twitter.com/", "'unsafe-inline'", "*.gstatic.com/", "*.googletagmanager.com/"],
-
+			connectSrc: ["'self'", "*.google-analytics.com/"],
         }
     },
 }));
