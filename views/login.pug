@@ -13,7 +13,7 @@ block content
    .col-md-10.col-lg-8.m-auto
     h6.title.mb-4.mt-5.pt-5 Log in   
 
-    form(action='' method='POST')
+    form(action='' method='POST' onreset="grecaptcha.reset();")
       input.form-control(type='email' name='email' placeholder='Je email' required='true')
      
       input.form-control(type='password' name='password' placeholder='Je wachtwoord' required='true')
@@ -21,6 +21,8 @@ block content
       input.form-control(type='hidden' name='csrf' required='true' value=csrfToken)
 
       #recaptcha(style= "display: flex; justify-content: center;" )
+
+      input.form-control(type='reset')
 
       input.form-control(type='submit' value='Log in')
 

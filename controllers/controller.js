@@ -302,13 +302,8 @@ exports.bus_verkoop_post = [
         })
       }
 
-      var checked = false;
-      if (req.body.yes_no == 'on') {
-        checked = true;
-      }
-
       const busticket = new BusTicket({
-        snacksIncluded: checked,
+        snacksIncluded: req.body.yes_no == 'on',
         person: person,
         bus: req.body.bus,
       })
@@ -530,6 +525,5 @@ exports.forgot_post = [
       });
 
     })
-
   }
 ]

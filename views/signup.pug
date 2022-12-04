@@ -13,7 +13,7 @@ block content
    .col-md-10.col-lg-8.m-auto
     h6.title.mb-4.mt-5.pt-5 Sign Up   
     
-    form(action='' method='POST').mt-5.pt-5
+    form(action='' method='POST' onreset="grecaptcha.reset();").mt-5.pt-5
 
       input.form-control(type='text' name='name' size='100%' placeholder='Je naam' required='true')
 
@@ -21,16 +21,16 @@ block content
 
       input.form-control(type='number' name='age' placeholder='Je leeftijd' required='true')
 
-      label Gender
-      select.form-control(name='gender', required='')
+      select.form-control(name='gender', required='', placeholder='Gender')
+        option(value='' disabled='' selected='' hidden='') Je Gender  
         option Man
         option Vrouw
         option Ander 
       
       input.form-control(type='password' name='password' placeholder='Je wachtwoord' required='true')
 
-      label Veiligheidsvraag
       select.form-control(name='question', required='')
+        option(value='' disabled='' selected='' hidden='') Je veiligheidsvraag
         option Wat is de naam van je eerste school?
         option Wat is de naam van je eerst vriend?
         option Wat is de naam van je eerste vakantiebestemming?
@@ -40,6 +40,8 @@ block content
       input.form-control(type='hidden' name='csrf' required='true' value=csrfToken)
 
       #recaptcha(style= "display: flex; justify-content: center;" )
+
+      input.form-control(type='reset')
 
       input.form-control(type='submit' value='Sign up')
 
