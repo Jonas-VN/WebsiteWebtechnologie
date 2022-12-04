@@ -4,6 +4,14 @@ head
   meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
   link(rel="icon" href='assets/imgs/logo.png')
   title= title
+  // Google tag (gtag.js)
+  script(async='' src='https://www.googletagmanager.com/gtag/js?id=G-G521ZQV9VY')
+  script.
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-G521ZQV9VY');
+
   // font icons
   link(rel='stylesheet' href='assets/vendors/themify-icons/css/themify-icons.css')
   // Bootstrap + Dorang main styles
